@@ -2,42 +2,46 @@
 
 var arr = [1, 2, 3, 4, 5];
 
-function toSquare(arr) {
+var selfMap = function(array, callback) {
     var result = [];
 
-    for (var i = 0; i < arr.length; i++) {
-        var acc = arr[i] ** 2;
-        result.push(acc);
+    for (var i = 0; i < array.length; i++) {
+        result.push(callback(array[i]));
     }
-
     return result;
-}
+};
 
-var res = toSquare(arr);
+var sqrt = function(num) {
+    return num ** 2;
+};
+
+var res = selfMap(arr, sqrt);
 console.log(res);
-
+console.log(arr);
 
 // 2) filter
 
 var arr = [1, 2, 3, 4, 5];
 
-function checkMultiplicity(arr) {
+var selfFilter = function(array, callback) {
     var result = [];
 
-    for (var i = 0; i < arr.length; i++) {
-        var acc = 0;
-        if(arr[i] % 2 === 0) {
-            acc = arr[i];
-            result.push(acc);
-        }         
+    for (var i = 0; i < array.length; i++) {
+        if(callback(array[i])) {
+            result.push(array[i]);
+        }        
     }
-
     return result;
-}
+};
 
-var res = checkMultiplicity(arr);
 
+var checkMultiplicity = function (num) {
+    return num % 2 === 0;
+};
+
+var res = selfFilter(arr, checkMultiplicity);
 console.log(res);
+console.log(arr);
 
 // 3) main task
 
@@ -61,16 +65,11 @@ var notification = [
 ];
 
 var result = notification.reduce(function(acc, info) {
-
-    if(info.date === info.date) {
-        acc[info.date];
-
         if(!acc[info.date]) {
             acc[info.date] = [];
         }
         
         acc[info.date].push(info.msg);
-    }
     
     return acc;
 }, {});
